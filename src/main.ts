@@ -1,23 +1,18 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import { setupCounter } from './counter'
+const input = document.querySelector<HTMLInputElement>("#file")!;
+const video = document.querySelector<HTMLVideoElement>("#video")!;
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+input.onchange = () => {
+  const file = input.files?.item(0);
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+  if (file) loadVideoFile(file);
+};
+
+function loadVideoFile(file: File) {
+  video.muted = true;
+  video.autoplay = true;
+  video.src = window.URL.createObjectURL(file);
+  video.load();
+  video.play();
+}
+
+export {};
